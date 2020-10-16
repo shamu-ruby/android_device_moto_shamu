@@ -1,5 +1,6 @@
 LOCAL_PATH:= $(call my-dir)
 
+include $(LOCAL_PATH)/../common.mk
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := \
@@ -57,7 +58,8 @@ LOCAL_C_INCLUDES += \
     frameworks/native/include/media/hardware \
     device/moto/shamu/camera/QCamera2/HAL
 
-LOCAL_HEADER_LIBRARIES := generated_kernel_headers
+LOCAL_C_INCLUDES += $(kernel_includes)
+LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps)
 
 #LOCAL_STATIC_LIBRARIES := libqcamera2_util
 LOCAL_C_INCLUDES += \

@@ -10,7 +10,8 @@ LOCAL_CFLAGS := -Wall -Werror
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../inc
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
 
-LOCAL_HEADER_LIBRARIES := generated_kernel_headers
+LOCAL_C_INCLUDES += $(kernel_includes)
+LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps)
 
 LOCAL_CLANG := true
 LOCAL_MODULE := librmnetctl

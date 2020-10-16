@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 
+# Hacks
+BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
+TARGET_PROVIDES_DATA_SERVICES := true
+
 # Architecture
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
@@ -44,6 +48,7 @@ TARGET_BOARD_PLATFORM := msm8084
 # Camera
 TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
     /system/bin/mm-qcamera-daemon=25
+BOARD_GLOBAL_CFLAGS += -DCONFIG_MSM_USES_M_STACK
 
 # Charger
 BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
@@ -79,7 +84,9 @@ BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
 BOARD_ROOT_EXTRA_FOLDERS := firmware fsg oem persist
 BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_OEMIMAGE_PARTITION_SIZE := 67108864
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16793600
+# BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16793600
+
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 20000000 # TEMPORARY FOR BUILD, DO NOT FLASH
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2147483648
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 25253773312
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -99,6 +106,7 @@ TARGET_USES_ION := true
 # Kernel
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := console=none
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += androidboot.hardware=shamu ehci-hcd.park=3
 BOARD_KERNEL_CMDLINE += utags.blkdev=/dev/block/platform/msm_sdcc.1/by-name/utags
 BOARD_KERNEL_CMDLINE += utags.backup=/dev/block/platform/msm_sdcc.1/by-name/utagsBackup
@@ -109,8 +117,13 @@ BOARD_KERNEL_TAGS_OFFSET := 0x01E00000
 BOARD_RAMDISK_OFFSET     := 0x02000000
 # Needs to be defined after the above flags
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+TARGET_KERNEL_APPEND_DTB := true
+TARGET_KERNEL_ARCH := arm
 TARGET_KERNEL_CONFIG := shamu_defconfig
 TARGET_KERNEL_SOURCE := kernel/moto/shamu
+TARGET_KERNEL_VERSION := 3.10
+KERNEL_DEFCONFIG := shamu_defconfig
+KERNEL_LLVM_SUPPORT := false
 
 # Manifests
 DEVICE_MANIFEST_FILE := device/moto/shamu/manifest.xml
@@ -146,4 +159,4 @@ WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
 
--include vendor/motorola/shamu/BoardConfigVendor.mk
+include vendor/moto/shamu/BoardConfigVendor.mk

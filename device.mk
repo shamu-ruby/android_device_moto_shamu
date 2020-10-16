@@ -31,6 +31,8 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_PACKAGES += \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio.effect@2.0-impl \
     audio.primary.msm8084 \
     audio.a2dp.default \
     audio.usb.default \
@@ -39,7 +41,6 @@ PRODUCT_PACKAGES += \
 
 USE_XML_AUDIO_POLICY_CONF := 1
 
-# Audio configs
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
@@ -60,15 +61,17 @@ PRODUCT_PACKAGES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
+    android.hardware.bluetooth@1.0-impl \
     bdAddrLoader_shamu \
     libbt-vendor
 
-# Bluetooth firmware
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/bluetooth/BCM4356A2_001.003.015.0077.0214_ORC.hcd:$(TARGET_COPY_OUT_VENDOR)/firmware/bcm4354A2.hcd
 
 # Camera
 PRODUCT_PACKAGES += \
+    android.hardware.camera.provider@2.4-impl \
+    camera.device@3.2-impl \
     Snap
 
 PRODUCT_PACKAGES += \
@@ -90,21 +93,49 @@ PRODUCT_PACKAGES += \
     libqdutils \
     libqdMetaData
 
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-impl \
+    android.hardware.drm@1.0-service \
+    android.hardware.drm@1.2-service.clearkey
+
+# Dumpstate
+PRODUCT_PACKAGES += \
+    android.hardware.dumpstate@1.0-service.shamu
+
 # Filesystem
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
    fs_config_files
 
+# GNSS
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl.legacy \
+    android.hardware.gnss@1.0-service.legacy
+
 # GPS
 PRODUCT_PACKAGES += \
     gps.msm8084
 
-# GPS config
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps.conf:$(TARGET_COPY_OUT_SYSTEM)/etc/gps.conf
 
-# HIDL
-$(call inherit-product, $(LOCAL_PATH)/hidl.mk)
+# Graphics
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.composer@2.1-service \
+    android.hardware.graphics.mapper@2.0-impl-2.1 \
+    android.hardware.memtrack@1.0-impl \
+    android.hardware.memtrack@1.0-service
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.egl=adreno
+
+# Health
+PRODUCT_PACKAGES += \
+   android.hardware.health@2.0-service.shamu
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
@@ -112,12 +143,28 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/apq8084-taiko-tfa9890_stereo_co_Button_Jack.kl:$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout/apq8084-taiko-tfa9890_stereo_co_Button_Jack.kl \
     $(LOCAL_PATH)/configs/atmel_mxt_ts.idc:$(TARGET_COPY_OUT_SYSTEM)/usr/idc/atmel_mxt_ts.idc
 
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.keymaster@3.0-service
+
 # Keystore
 PRODUCT_PACKAGES += \
     keystore.msm8084
 
+# Light
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-service.shamu
+
+# Netutils
+PRODUCT_PACKAGES += \
+    android.system.net.netd@1.0 \
+    netutils-wrapper-1.0
+
 # NFC
 PRODUCT_PACKAGES += \
+    android.hardware.nfc@1.0-impl-bcm \
+    android.hardware.nfc@1.0-service \
     com.android.nfc_extras \
     nfc_nci.bcm2079x.default \
     NfcNci \
@@ -157,8 +204,7 @@ PRODUCT_PACKAGES += \
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS := \
-    $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
+    $(LOCAL_PATH)/overlay
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -188,6 +234,11 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml
 
+# Power
+PRODUCT_PACKAGES += \
+    android.hardware.power@1.2-service.shamu \
+    power.msm8084
+
 # Privileged permissions whitelist
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/privapp-permissions_shamu.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions_shamu.xml
@@ -212,6 +263,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fastbootd
 
+# RenderScript
+PRODUCT_PACKAGES += \
+    android.hardware.renderscript@1.0-impl
+
 # RIL
 PRODUCT_PACKAGES += \
     libion \
@@ -223,6 +278,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
 
+# Sensors
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl
+
 # Shippig API
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_l.mk)
 
@@ -232,7 +291,10 @@ PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH)
 # System Properties
 -include $(LOCAL_PATH)/system_prop.mk
 
-# Thermal config
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal@1.1-service.shamu
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine-shamu.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-shamu.conf
 
@@ -240,9 +302,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     atmel.fw.apq8084
 
-# Touch firmware updater
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/bin/init.mmi.touch.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.mmi.touch.sh
+
+# USB
+PRODUCT_PACKAGES += \
+    android.hardware.usb@1.0-service.basic
 
 # Verity
 # Only include verity on user builds for LineageOS
@@ -252,24 +317,25 @@ PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/platform/msm_sdcc.1/by-name/system
 $(call inherit-product, build/target/product/verity.mk)
 endif
 
+# Vibrator
+PRODUCT_PACKAGES += \
+    android.hardware.vibrator@1.1-service.shamu
+
 # Wi-Fi
 PRODUCT_PACKAGES += \
+    android.hardware.wifi@1.0-service.legacy \
     libwpa_client \
     hostapd \
     wifilogd \
     wpa_supplicant \
     wpa_supplicant.conf
 
-# WiFi cal NVRAM file
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/bcmdhd.cal:$(TARGET_COPY_OUT_SYSTEM)/etc/wifi/bcmdhd.cal
-
-# WiFi config
-PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/bcmdhd.cal:$(TARGET_COPY_OUT_SYSTEM)/etc/wifi/bcmdhd.cal \
     $(LOCAL_PATH)/configs/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf
 
 # WiFi firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4356/device-bcm.mk)
 
-
-
+# Inherit proprietary files
+$(call inherit-product, vendor/moto/shamu/shamu-vendor.mk)
