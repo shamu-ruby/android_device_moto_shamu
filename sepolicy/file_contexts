@@ -132,6 +132,9 @@
 ###################################
 # sysfs files
 #
+/sys/class/timed_output/vibrator/vtg_level            u:object_r:sysfs:s0
+/sys/class/timed_output/vibrator/vtg_min              u:object_r:sysfs:s0
+/sys/class/timed_output/vibrator/vtg_max              u:object_r:sysfs:s0
 /sys/devices/system/cpu                               u:object_r:sysfs_devices_system_cpu:s0
 /sys/devices/system/cpu/cpu0/rq-stats                 u:object_r:sysfs_rqstats:s0
 /sys/devices/virtual/graphics/fb[0-1]/msm_.*          u:object_r:sysfs_graphics:s0

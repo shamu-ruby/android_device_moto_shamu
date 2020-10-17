@@ -5,4 +5,4 @@ on early-boot
 service vendor.vibrator-1-1 /vendor/bin/hw/android.hardware.vibrator@1.1-service.shamu
     class hal
     user system
-group system
+    group system

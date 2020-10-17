@@ -244,7 +244,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/privapp-permissions_shamu.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions_shamu.xml
 
 # Ramdisk
- PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     fstab.shamu \
     init.shamu.rc \
     init.shamu.power.rc \
